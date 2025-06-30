@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - TrendShirt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reuse the same styles from index.html */
+        :root {
+            --primary: #0A2463;
+            --secondary: #FF6B6B;
+            --accent: #FFD700;
+            --light: #F5F5F5;
+            --dark: #222;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header/Navbar (same as index.html) */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-icons i {
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .nav-icons i:hover {
+            transform: scale(1.1);
+            color: var(--secondary);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+        }
+        
+        /* Checkout Page Specific Styles */
+        .checkout-header {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .checkout-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            margin: 2rem 0;
+        }
+        
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--secondary);
+        }
+        
+        .breadcrumb .active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .checkout-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 0 2rem;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ddd;
+            color: #666;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            z-index: 1;
+        }
+        
+        .step.active .step-number {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .step.completed .step-number {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .step-title {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .step.active .step-title {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .step.completed .step-title {
+            color: var(--secondary);
+        }
+        
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ddd;
+            z-index: 0;
+        }
+        
+        .step:first-child::before {
+            width: 50%;
+            left: 50%;
+        }
+        
+        .step:last-child::before {
+            width: 50%;
+            right: 50%;
+        }
+        
+        .checkout-content {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+        
+        .checkout-form {
+            flex: 2;
+        }
+        
+        .checkout-summary {
+            flex: 1;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: fit-content;
+        }
+        
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .form-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+        
+        .payment-method.active {
+            border-color: var(--primary);
+            background: rgba(10, 36, 99, 0.05);
+        }
+        
+        .payment-method input {
+            margin-right: 1rem;
+        }
+        
+        .payment-method-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .payment-method-info i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .order-summary h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .order-items {
+            margin-bottom: 1.5rem;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .order-item-info {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .order-item-img {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .order-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .order-item-details h4 {
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+        
+        .order-item-details p {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .order-item-price {
+            font-weight: 600;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .summary-total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin: 1.5rem 0;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        /* Footer (same as index.html) */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 5rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-col .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-col .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .footer-col .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ddd;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 992px) {
+            .checkout-content {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .checkout-steps .step-title {
+                display: none;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Trend<span>Shirt</span></a>
+                
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                
+                <div class="nav-icons">
+                    <div style="position: relative;">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div style="position: relative;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div style="position: relative;">
+                        <i class="fas fa-heart"></i>
+                        <span class="cart-count">3</span>
+                    </div>
+                    <div style="position: relative;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">5</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Checkout Header -->
+    <section class="checkout-header">
+        <div class="container">
+            <h1>Secure Checkout</h1>
+            <p>Complete your purchase in just a few steps</p>
+        </div>
+    </section>
+    
+    <!-- Breadcrumb -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="cart.html">Cart</a>
+            <span>/</span>
+            <a href="checkout.html" class="active">Checkout</a>
+        </div>
+    </div>
+    
+    <!-- Checkout Steps -->
+    <div class="container">
+        <div class="checkout-steps">
+            <div class="step completed">
+                <div class="step-number">1</div>
+                <div class="step-title">Shopping Cart</div>
+            </div>
+            <div class="step active">
+                <div class="step-number">2</div>
+                <div class="step-title">Checkout</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-title">Order Complete</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Checkout Content -->
+    <section class="container">
+        <div class="checkout-content">
+            <div class="checkout-form">
+                <form id="checkout-form">
+                    <div class="form-section">
+                        <h3>Billing Details</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company">Company Name (Optional)</label>
+                            <input type="text" id="company">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select id="country" required>
+                                <option value="">Select Country</option>
+                                <option value="India" selected>India</option>
+                                <option value="USA">United States</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Australia">Australia</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address">Street Address</label>
+                            <input type="text" id="address" placeholder="House number and street name" required>
+                            <input type="text" placeholder="Apartment, suite, unit etc. (optional)" style="margin-top: 0.5rem;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="city">Town / City</label>
+                            <input type="text" id="city" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <select id="state" required>
+                                <option value="">Select State</option>
+                                <option value="MH">Maharashtra</option>
+                                <option value="DL">Delhi</option>
+                                <option value="KA">Karnataka</option>
+                                <option value="TN">Tamil Nadu</option>
+                                <option value="UP">Uttar Pradesh</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="postcode">Postcode / ZIP</label>
+                            <input type="text" id="postcode" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="checkbox" id="create-account">
+                            <label for="create-account" style="display: inline; margin-left: 0.5rem;">Create an account?</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Shipping Details</h3>
+                        
+                        <div class="form-group">
+                            <input type="checkbox" id="same-as-billing" checked>
+                            <label for="same-as-billing" style="display: inline; margin-left: 0.5rem;">Ship to same address as billing</label>
+                        </div>
+                        
+                        <div id="shipping-fields" style="display: none;">
+                            <!-- Shipping fields would be the same as billing, hidden by default -->
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="order-notes">Order Notes (Optional)</label>
+                            <textarea id="order-notes" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Payment Method</h3>
+                        
+                        <div class="payment-methods">
+                            <label class="payment-method active">
+                                <input type="radio" name="payment-method" value="credit-card" checked>
+                                <div class="payment-method-info">
+                                    <i class="far fa-credit-card"></i>
+                                    <span>Credit/Debit Card</span>
+                                </div>
+                            </label>
+                            
+                            <label class="payment-method">
+                                <input type="radio" name="payment-method" value="paypal">
+                                <div class="payment-method-info">
+                                    <i class="fab fa-cc-paypal"></i>
+                                    <span>PayPal</span>
+                                </div>
+                            </label>
+                            
+                            <label class="payment-method">
+                                <input type="radio" name="payment-method" value="upi">
+                                <div class="payment-method-info">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>UPI Payment</span>
+                                </div>
+                            </label>
+                            
+                            <label class="payment-method">
+                                <input type="radio" name="payment-method" value="cod">
+                                <div class="payment-method-info">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span>Cash on Delivery</span>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div id="credit-card-fields" style="margin-top: 1.5rem;">
+                            <div class="form-group">
+                                <label for="card-number">Card Number</label>
+                                <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="card-name">Name on Card</label>
+                                <input type="text" id="card-name" placeholder="John Smith">
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="card-expiry">Expiry Date</label>
+                                    <input type="text" id="card-expiry" placeholder="MM/YY">
+                                </div>
+                                <div class="form-group">
+                                    <label for="card-cvv">CVV</label>
+                                    <input type="text" id="card-cvv" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="checkout-summary">
+                <div class="order-summary">
+                    <h3>Your Order</h3>
+                    
+                    <div class="order-items">
+                        <div class="order-item">
+                            <div class="order-item-info">
+                                <div class="order-item-img">
+                                    <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80" alt="Classic White Shirt">
+                                </div>
+                                <div class="order-item-details">
+                                    <h4>Classic White Shirt</h4>
+                                    <p>Size: M | Qty: 2</p>
+                                </div>
+                            </div>
+                            <div class="order-item-price">₹2,598</div>
+                        </div>
+                        
+                        <div class="order-item">
+                            <div class="order-item-info">
+                                <div class="order-item-img">
+                                    <img src="https://images.unsplash.com/photo-1539533018447-63fcce2678e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80" alt="Floral Summer Shirt">
+                                </div>
+                                <div class="order-item-details">
+                                    <h4>Floral Summer Shirt</h4>
+                                    <p>Size: L | Qty: 1</p>
+                                </div>
+                            </div>
+                            <div class="order-item-price">₹999</div>
+                        </div>
+                        
+                        <div class="order-item">
+                            <div class="order-item-info">
+                                <div class="order-item-img">
+                                    <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80" alt="Oxford Blue Shirt">
+                                </div>
+                                <div class="order-item-details">
+                                    <h4>Oxford Blue Shirt</h4>
+                                    <p>Size: XL | Qty: 1</p>
+                                </div>
+                            </div>
+                            <div class="order-item-price">₹1,499</div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>₹5,096</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>FREE</span>
+                    </div>
+                    
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span>₹306</span>
+                    </div>
+                    
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span>₹5,402</span>
+                    </div>
+                    
+                    <button type="submit" form="checkout-form" class="btn btn-block">Place Order</button>
+                    
+                    <div class="secure-checkout">
+                        <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem;">
+                            <i class="fas fa-lock"></i> Secure checkout. Your information is protected.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>TrendShirt</h3>
+                    <p>Premium quality shirts that combine comfort and fashion. Elevate your style with our curated collections.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Payment Methods</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fashion Street, Mumbai</li>
+                        <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                        <li><i class="fas fa-envelope"></i> info@trendshirt.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 TrendShirt. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Checkout Page Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle shipping fields
+            const sameAsBilling = document.getElementById('same-as-billing');
+            const shippingFields = document.getElementById('shipping-fields');
+            
+            sameAsBilling.addEventListener('change', function() {
+                shippingFields.style.display = this.checked ? 'none' : 'block';
+            });
+            
+            // Payment method selection
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            const creditCardFields = document.getElementById('credit-card-fields');
+            
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    paymentMethods.forEach(m => m.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show/hide credit card fields
+                    if (this.querySelector('input').value === 'credit-card') {
+                        creditCardFields.style.display = 'block';
+                    } else {
+                        creditCardFields.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Form submission
+            const checkoutForm = document.getElementById('checkout-form');
+            
+            checkoutForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // In a real app, you would validate the form and process payment
+                // For demo, we'll just redirect to thank you page
+                window.location.href = 'thank-you.html';
+            });
+        });
+    </script>
+</body>
+</html>

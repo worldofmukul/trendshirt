@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic White Shirt - TrendShirt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reuse the same styles from index.html */
+        :root {
+            --primary: #0A2463;
+            --secondary: #FF6B6B;
+            --accent: #FFD700;
+            --light: #F5F5F5;
+            --dark: #222;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header/Navbar (same as index.html) */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-icons i {
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .nav-icons i:hover {
+            transform: scale(1.1);
+            color: var(--secondary);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+        }
+        
+        /* Product Detail Page Specific Styles */
+        .breadcrumb {
+            display: flex;
+            margin: 2rem 0;
+        }
+        
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--secondary);
+        }
+        
+        .breadcrumb .active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .product-detail {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+        
+        .product-images {
+            flex: 1;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .thumbnail-images {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .thumbnail-images img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .thumbnail-images img.active {
+            border-color: var(--primary);
+        }
+        
+        .main-image {
+            flex: 1;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 500px;
+            object-fit: contain;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        
+        .product-info {
+            flex: 1;
+        }
+        
+        .product-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stars {
+            color: var(--accent);
+            margin-right: 1rem;
+        }
+        
+        .review-count {
+            color: #666;
+        }
+        
+        .product-description {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .product-options {
+            margin-bottom: 2rem;
+        }
+        
+        .option-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .option-group h4 {
+            margin-bottom: 0.8rem;
+        }
+        
+        .size-options {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .size-options button {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .size-options button:hover {
+            border-color: var(--primary);
+        }
+        
+        .size-options button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .color-options button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .color-options button:hover {
+            border-color: var(--primary);
+        }
+        
+        .color-options button.active {
+            border-color: var(--primary);
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .quantity-selector button {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .quantity-selector input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-outline {
+            background: white;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .product-meta {
+            border-top: 1px solid #eee;
+            padding-top: 1.5rem;
+        }
+        
+        .meta-item {
+            margin-bottom: 1rem;
+        }
+        
+        .meta-item span {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        /* Product Tabs */
+        .product-tabs {
+            margin-bottom: 5rem;
+        }
+        
+        .tab-headers {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 2rem;
+        }
+        
+        .tab-header {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .tab-header.active {
+            color: var(--primary);
+        }
+        
+        .tab-header.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1rem;
+            line-height: 1.6;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Related Products */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-img {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        
+        .product-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .product-info-small {
+            padding: 1.5rem;
+        }
+        
+        .product-info-small h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-info-small p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+        
+        .add-to-cart {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background: var(--secondary);
+            transform: rotate(360deg);
+        }
+        
+        /* Footer (same as index.html) */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 5rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-col .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-col .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .footer-col .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ddd;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 992px) {
+            .product-detail {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .product-images {
+                flex-direction: column-reverse;
+            }
+            
+            .thumbnail-images {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+            
+            .main-image img {
+                height: 400px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Trend<span>Shirt</span></a>
+                
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                
+                <div class="nav-icons">
+                    <div style="position: relative;">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div style="position: relative;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div style="position: relative;">
+                        <i class="fas fa-heart"></i>
+                        <span class="cart-count">3</span>
+                    </div>
+                    <div style="position: relative;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">5</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Breadcrumb -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="shop.html">Shop</a>
+            <span>/</span>
+            <a href="#" class="active">Classic White Shirt</a>
+        </div>
+    </div>
+    
+    <!-- Product Detail -->
+    <section class="container">
+        <div class="product-detail">
+            <!-- Product Images -->
+            <div class="product-images">
+                <div class="thumbnail-images">
+                    <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80" alt="Classic White Shirt" class="active">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1036&q=80" alt="Classic White Shirt Back">
+                    <img src="https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80" alt="Classic White Shirt Detail">
+                    <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80" alt="Classic White Shirt Worn">
+                </div>
+                
+                <div class="main-image">
+                    <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80" alt="Classic White Shirt" id="main-product-image">
+                </div>
+            </div>
+            
+            <!-- Product Info -->
+            <div class="product-info">
+                <h1 class="product-title">Classic White Shirt</h1>
+                <div class="product-price">₹1,299</div>
+                
+                <div class="product-rating">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div class="review-count">(42 reviews)</div>
+                </div>
+                
+                <p class="product-description">
+                    Our premium cotton formal shirt with french cuffs is perfect for any professional setting. 
+                    Made with 100% Egyptian cotton for superior comfort and breathability. The tailored fit 
+                    provides a sleek silhouette while allowing freedom of movement.
+                </p>
+                
+                <div class="product-options">
+                    <div class="option-group">
+                        <h4>Size</h4>
+                        <div class="size-options">
+                            <button>S</button>
+                            <button class="active">M</button>
+                            <button>L</button>
+                            <button>XL</button>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <h4>Color</h4>
+                        <div class="color-options">
+                            <button style="background: #fff; border: 1px solid #ddd;" class="active"></button>
+                            <button style="background: #f5f5f5;"></button>
+                            <button style="background: #f0f0f0;"></button>
+                        </div>
+                    </div>
+                    
+                    <div class="quantity-selector">
+                        <h4>Quantity</h4>
+                        <button id="decrease-qty">-</button>
+                        <input type="number" value="1" min="1" id="quantity">
+                        <button id="increase-qty">+</button>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn" id="add-to-cart">Add to Cart</button>
+                    <button class="btn btn-outline">Add to Wishlist</button>
+                </div>
+                
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <span>SKU:</span> TS-WHITE-001
+                    </div>
+                    <div class="meta-item">
+                        <span>Category:</span> Formal Shirts
+                    </div>
+                    <div class="meta-item">
+                        <span>Tags:</span> Bestseller, Office, Premium
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Tabs -->
+        <div class="product-tabs">
+            <div class="tab-headers">
+                <div class="tab-header active" data-tab="description">Description</div>
+                <div class="tab-header" data-tab="details">Additional Information</div>
+                <div class="tab-header" data-tab="reviews">Reviews (42)</div>
+                <div class="tab-header" data-tab="shipping">Shipping & Returns</div>
+            </div>
+            
+            <div class="tab-content active" id="description">
+                <p>
+                    The Classic White Shirt from TrendShirt is the epitome of timeless elegance. 
+                    Crafted from premium 100% Egyptian cotton, this shirt offers unparalleled comfort 
+                    and breathability throughout the day. The fabric has a subtle sheen that adds 
+                    sophistication to your professional attire.
+                </p>
+                <p>
+                    Features include:
+                </p>
+                <ul>
+                    <li>French cuffs for a refined look</li>
+                    <li>Mother-of-pearl buttons for durability</li>
+                    <li>Tailored fit that flatters without restricting movement</li>
+                    <li>Reinforced seams for longevity</li>
+                    <li>Wrinkle-resistant finish for easy maintenance</li>
+                </ul>
+                <p>
+                    Perfect for boardroom meetings, client presentations, or formal events. Pair with 
+                    your favorite suit or wear it with dress pants for a polished business casual look.
+                </p>
+            </div>
+            
+            <div class="tab-content" id="details">
+                <table>
+                    <tr>
+                        <td><strong>Material</strong></td>
+                        <td>100% Egyptian Cotton</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fit</strong></td>
+                        <td>Tailored Fit</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Collar</strong></td>
+                        <td>Classic Spread Collar</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cuffs</strong></td>
+                        <td>French Cuffs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Care Instructions</strong></td>
+                        <td>Machine wash cold, gentle cycle. Do not bleach. Iron on medium heat. Dry clean recommended.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Origin</strong></td>
+                        <td>Made in India</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="tab-content" id="reviews">
+                <div class="review">
+                    <div class="review-header">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4>Perfect Fit and Quality</h4>
+                        <div class="review-meta">By Rahul Sharma on October 12, 2023</div>
+                    </div>
+                    <p>
+                        This shirt exceeded my expectations. The fabric is luxurious and the fit is perfect. 
+                        I've received multiple compliments already. Will definitely buy more colors.
+                    </p>
+                </div>
+                
+                <div class="review">
+                    <div class="review-header">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <h4>Great Shirt</h4>
+                        <div class="review-meta">By Priya Patel on September 28, 2023</div>
+                    </div>
+                    <p>
+                        Very comfortable and looks professional. The only reason I didn't give 5 stars is 
+                        because it wrinkles a bit more than I expected. Still highly recommend!
+                    </p>
+                </div>
+                
+                <div class="review-form">
+                    <h3>Add a Review</h3>
+                    <form>
+                        <div class="form-group">
+                            <label>Your Rating</label>
+                            <div class="rating-stars">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your Review"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email">
+                        </div>
+                        <button type="submit" class="btn">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="shipping">
+                <h3>Shipping Information</h3>
+                <p>
+                    We offer free standard shipping on all orders over ₹2000. For orders below ₹2000, 
+                    a flat shipping fee of ₹100 will be applied. We ship across India within 3-5 business days.
+                </p>
+                <p>
+                    For international shipping, please contact our customer service for rates and delivery times.
+                </p>
+                
+                <h3>Returns & Exchanges</h3>
+                <p>
+                    We accept returns within 15 days of delivery. Items must be unworn, unwashed, and 
+                    in original condition with all tags attached. To initiate a return, please contact 
+                    our customer service team.
+                </p>
+                <p>
+                    Exchanges are subject to product availability. If you need a different size or color, 
+                    we recommend placing a new order and returning the original item.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Related Products -->
+        <div class="section-title">
+            <h2>You May Also Like</h2>
+            <p>Complete your look with these matching items</p>
+        </div>
+        
+        <div class="products" id="related-products">
+            <!-- Related products will be loaded dynamically with JS -->
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>TrendShirt</h3>
+                    <p>Premium quality shirts that combine comfort and fashion. Elevate your style with our curated collections.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Payment Methods</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fashion Street, Mumbai</li>
+                        <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                        <li><i class="fas fa-envelope"></i> info@trendshirt.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 TrendShirt. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Product Detail Page Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Thumbnail image click handler
+            const thumbnails = document.querySelectorAll('.thumbnail-images img');
+            const mainImage = document.getElementById('main-product-image');
+            
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    // Update main image
+                    mainImage.src = this.src;
+                    
+                    // Update active thumbnail
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Quantity selector
+            const quantityInput = document.getElementById('quantity');
+            const decreaseBtn = document.getElementById('decrease-qty');
+            const increaseBtn = document.getElementById('increase-qty');
+            
+            decreaseBtn.addEventListener('click', function() {
+                let value = parseInt(quantityInput.value);
+                if (value > 1) {
+                    quantityInput.value = value - 1;
+                }
+            });
+            
+            increaseBtn.addEventListener('click', function() {
+                let value = parseInt(quantityInput.value);
+                quantityInput.value = value + 1;
+            });
+            
+            // Tab switching
+            const tabHeaders = document.querySelectorAll('.tab-header');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Update active tab header
+                    tabHeaders.forEach(h => h.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active tab content
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Star rating for reviews
+            const stars = document.querySelectorAll('.rating-stars i');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.remove('far');
+                            s.classList.add('fas');
+                        } else {
+                            s.classList.remove('fas');
+                            s.classList.add('far');
+                        }
+                    });
+                });
+            });
+            
+            // Related products
+            const relatedProducts = [
+                {
+                    id: 5,
+                    name: "Oxford Blue Shirt",
+                    description: "Classic oxford shirt in navy blue",
+                    price: "₹1,499",
+                    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80",
+                    tag: "Popular"
+                },
+                {
+                    id: 6,
+                    name: "Checkered Red Shirt",
+                    description: "Warm checkered shirt for winter",
+                    price: "₹1,399",
+                    image: "https://images.unsplash.com/photo-1525450824786-227cbef70703?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                    tag: "Winter"
+                },
+                {
+                    id: 7,
+                    name: "Black Silk Shirt",
+                    description: "Luxurious silk shirt for special occasions",
+                    price: "₹2,499",
+                    image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1036&q=80",
+                    tag: "Luxury"
+                },
+                {
+                    id: 8,
+                    name: "Pink Casual Shirt",
+                    description: "Soft cotton shirt in pastel pink",
+                    price: "₹1,199",
+                    image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80",
+                    tag: "Spring"
+                }
+            ];
+            
+            const relatedContainer = document.getElementById('related-products');
+            
+            relatedProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-img">
+                        <img src="${product.image}" alt="${product.name}">
+                        <span class="product-tag">${product.tag}</span>
+                    </div>
+                    <div class="product-info-small">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <div class="product-bottom">
+                            <span class="price">${product.price}</span>
+                            <button class="add-to-cart" data-id="${product.id}">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                relatedContainer.appendChild(productCard);
+            });
+            
+            // Add to cart functionality
+            const addToCartBtn = document.getElementById('add-to-cart');
+            const cartCount = document.querySelector('.fa-shopping-cart + .cart-count');
+            let count = 5;
+            
+            addToCartBtn.addEventListener('click', function() {
+                const quantity = parseInt(quantityInput.value);
+                count += quantity;
+                cartCount.textContent = count;
+                
+                // Animation/confirmation would go here
+                alert(`${quantity} ${quantity > 1 ? 'items' : 'item'} added to cart!`);
+            });
+            
+            // Similar add to cart for related products
+            const relatedAddToCartBtns = document.querySelectorAll('#related-products .add-to-cart');
+            relatedAddToCartBtns.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    count++;
+                    cartCount.textContent = count;
+                    
+                    // Animation
+                    this.style.backgroundColor = 'var(--secondary)';
+                    setTimeout(() => {
+                        this.style.backgroundColor = 'var(--primary)';
+                    }, 300);
+                    
+                    console.log(`Added product ${productId} to cart`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

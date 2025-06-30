@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - TrendShirt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reuse the same styles from index.html */
+        :root {
+            --primary: #0A2463;
+            --secondary: #FF6B6B;
+            --accent: #FFD700;
+            --light: #F5F5F5;
+            --dark: #222;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Header/Navbar (same as index.html) */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-icons i {
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .nav-icons i:hover {
+            transform: scale(1.1);
+            color: var(--secondary);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+        }
+        
+        /* Shop Page Specific Styles */
+        .shop-header {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            animation: zoomInOut 20s infinite alternate;
+        }
+        
+        @keyframes zoomInOut {
+            0% { background-size: 100% auto; }
+            100% { background-size: 120% auto; }
+        }
+        
+        .shop-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(10,36,99,0.3), rgba(255,107,107,0.3));
+            z-index: 1;
+        }
+        
+        .shop-header-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .shop-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .shop-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .breadcrumb .active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .shop-content {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        
+        .sidebar h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .filter-group {
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .filter-group h4 {
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .filter-options {
+            list-style: none;
+        }
+        
+        .filter-options li {
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .filter-options li:hover {
+            transform: translateX(5px);
+        }
+        
+        .filter-options a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .filter-options a:hover {
+            color: var(--secondary);
+        }
+        
+        .price-range {
+            width: 100%;
+            margin-top: 1rem;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+        }
+        
+        .price-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .price-range::-webkit-slider-thumb:hover {
+            background: var(--secondary);
+            transform: scale(1.2);
+        }
+        
+        .price-inputs {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+        
+        .price-inputs input {
+            width: 45%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .price-inputs input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(10,36,99,0.1);
+        }
+        
+        .main-content {
+            flex: 1;
+        }
+        
+        .sort-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        
+        .sort-bar:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .sort-bar select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sort-bar select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(10,36,99,0.1);
+        }
+        
+        .view-options {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .view-options button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #666;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .view-options button:hover {
+            color: var(--secondary);
+            background: rgba(255,107,107,0.1);
+        }
+        
+        .view-options .active {
+            color: var(--primary);
+            background: rgba(10,36,99,0.1);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .pagination a {
+            display: inline-block;
+            padding: 0.7rem 1.2rem;
+            margin: 0 0.3rem;
+            border: 1px solid #ddd;
+            color: #666;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+        
+        .pagination a:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(10,36,99,0.2);
+        }
+        
+        .pagination .active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Product Card Styles */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .products.list-view {
+            display: block;
+        }
+        
+        .products.list-view .product-card {
+            display: flex;
+            max-height: 200px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .products.list-view .product-img {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .products.list-view .product-info {
+            flex: 1;
+            padding: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .product-img {
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+        
+        .product-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .product-card:hover .product-info h3 {
+            color: var(--primary);
+        }
+        
+        .product-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+        
+        .add-to-cart {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background: var(--secondary);
+            transform: rotate(360deg);
+        }
+        
+        /* Size and Color Options */
+        .size-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .size-options button {
+            padding: 0.3rem 0.6rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+        }
+        
+        .size-options button:hover, 
+        .size-options button.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .color-options button {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .color-options button:hover,
+        .color-options button.selected {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        /* Special Offers Banner */
+        .special-offers {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .special-offers::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 15s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .offer-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+        
+        .offer-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .offer-content p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .offer-timer {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            gap: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .timer-item {
+            text-align: center;
+        }
+        
+        .timer-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .timer-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            display: block;
+        }
+        
+        /* Featured Collection */
+        .featured-collection {
+            margin: 4rem 0;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-header h2 {
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .section-header a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .section-header a:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+        
+        /* Footer (same as index.html) */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 5rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-col .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-col .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .footer-col .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ddd;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 992px) {
+            .shop-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: static;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .products.list-view .product-card {
+                flex-direction: column;
+                max-height: none;
+            }
+            
+            .products.list-view .product-img {
+                width: 100%;
+                height: 300px;
+            }
+            
+            .special-offers {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .shop-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .sort-bar {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .offer-timer {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">Trend<span>Shirt</span></a>
+                
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="shop.html" class="active">Shop</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                
+                <div class="nav-icons">
+                    <div style="position: relative;">
+                        <i class="fas fa-search" id="search-icon"></i>
+                        <div class="search-box" style="display: none; position: absolute; top: 40px; right: 0; background: white; padding: 1rem; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 10;">
+                            <input type="text" placeholder="Search products..." id="search-input" style="padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px; width: 200px;">
+                        </div>
+                    </div>
+                    <div style="position: relative;">
+                        <i class="fas fa-user" id="user-icon"></i>
+                        <div class="user-dropdown" style="display: none; position: absolute; top: 40px; right: 0; background: white; padding: 1rem; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); z-index: 10; width: 200px;">
+                            <a href="login.html" style="display: block; padding: 0.5rem; color: var(--dark); text-decoration: none;">Login</a>
+                            <a href="register.html" style="display: block; padding: 0.5rem; color: var(--dark); text-decoration: none;">Register</a>
+                            <a href="account.html" style="display: block; padding: 0.5rem; color: var(--dark); text-decoration: none;">My Account</a>
+                        </div>
+                    </div>
+                    <div style="position: relative;">
+                        <i class="fas fa-heart" id="wishlist-icon"></i>
+                        <span class="cart-count" id="wishlist-count">3</span>
+                    </div>
+                    <div style="position: relative;">
+                        <i class="fas fa-shopping-cart" id="cart-icon"></i>
+                        <span class="cart-count" id="cart-count">5</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Shop Header -->
+    <section class="shop-header">
+        <div class="shop-header-content">
+            <h1>Discover Our Collection</h1>
+            <p>Premium quality shirts crafted for comfort and style. Find your perfect fit from our curated selection.</p>
+        </div>
+    </section>
+    
+    <!-- Breadcrumb -->
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="shop.html" class="active">Shop</a>
+        </div>
+    </div>
+    
+    <!-- Special Offers Banner -->
+    <div class="container">
+        <div class="special-offers">
+            <div class="offer-content">
+                <h2>Summer Sale! Up to 50% Off</h2>
+                <p>Limited time offer on selected items. Don't miss out!</p>
+            </div>
+            <div class="offer-timer">
+                <div class="timer-item">
+                    <span class="timer-value" id="days">02</span>
+                    <span class="timer-label">Days</span>
+                </div>
+                <div class="timer-item">
+                    <span class="timer-value" id="hours">12</span>
+                    <span class="timer-label">Hours</span>
+                </div>
+                <div class="timer-item">
+                    <span class="timer-value" id="minutes">45</span>
+                    <span class="timer-label">Minutes</span>
+                </div>
+                <div class="timer-item">
+                    <span class="timer-value" id="seconds">30</span>
+                    <span class="timer-label">Seconds</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Shop Content -->
+    <section class="container">
+        <div class="shop-content">
+            <!-- Sidebar Filters -->
+            <aside class="sidebar">
+                <h3>Filter Products</h3>
+                
+                <div class="filter-group">
+                    <h4>Categories <i class="fas fa-chevron-down"></i></h4>
+                    <ul class="filter-options" id="category-filter">
+                        <li><a href="#" data-category="all" class="active">All Shirts</a></li>
+                        <li><a href="#" data-category="formal">Formal Shirts</a></li>
+                        <li><a href="#" data-category="casual">Casual Shirts</a></li>
+                        <li><a href="#" data-category="summer">Summer Collection</a></li>
+                        <li><a href="#" data-category="designer">Designer Edition</a></li>
+                        <li><a href="#" data-category="linen">Linen Shirts</a></li>
+                        <li><a href="#" data-category="denim">Denim Shirts</a></li>
+                    </ul>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Price Range <i class="fas fa-chevron-down"></i></h4>
+                    <input type="range" class="price-range" id="price-range" min="0" max="10000" value="5000">
+                    <div class="price-inputs">
+                        <input type="number" placeholder="Min" id="min-price" value="0">
+                        <input type="number" placeholder="Max" id="max-price" value="5000">
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Size <i class="fas fa-chevron-down"></i></h4>
+                    <div class="size-options" id="size-filter">
+                        <button data-size="all" class="selected">All</button>
+                        <button data-size="XS">XS</button>
+                        <button data-size="S">S</button>
+                        <button data-size="M">M</button>
+                        <button data-size="L">L</button>
+                        <button data-size="XL">XL</button>
+                        <button data-size="XXL">XXL</button>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h4>Color <i class="fas fa-chevron-down"></i></h4>
+                    <div class="color-options" id="color-filter">
+                        <button data-color="all" class="selected" style="background: #f5f5f5; border: 1px solid #ddd;">All</button>
+                        <button data-color="white" style="background: #fff; border: 1px solid #ddd;"></button>
+                        <button data-color="black" style="background: #000;"></button>
+                        <button data-color="blue" style="background: #0A2463;"></button>
+                        <button data-color="red" style="background: #FF6B6B;"></button>
+                        <button data-color="yellow" style="background: #FFD700;"></button>
+                        <button data-color="green" style="background: #228B22;"></button>
+                        <button data-color="pink" style="background: #FFC0CB;"></button>
+                        <button data-color="gray" style="background: #808080;"></button>
+                        <button data-color="navy" style="background: #000080;"></button>
+                        <button data-color="maroon" style="background: #800000;"></button>
+                        <button data-color="beige" style="background: #F5F5DC;"></button>
+                    </div>
+                </div>
+                
+                <button class="btn" style="width: 100%; margin-top: 1rem; padding: 0.8rem; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer; transition: all 0.3s;" id="apply-filters">Apply Filters</button>
+                <button class="btn btn-outline" style="width: 100%; margin-top: 0.5rem; padding: 0.8rem; background: white; color: var(--primary); border: 1px solid var(--primary); border-radius: 5px; cursor: pointer; transition: all 0.3s;" id="reset-filters">Reset Filters</button>
+            </aside>
+            
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Featured Collection -->
+                <div class="featured-collection">
+                    <div class="section-header">
+                        <h2>Featured Collection</h2>
+                        <a href="#">View All</a>
+                    </div>
+                    <div class="products">
+                        <!-- Featured products will be inserted here by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="sort-bar">
+                    <div>
+                        <span id="showing-count">Showing 1-12 of 50 products</span>
+                    </div>
+                    <div class="sort-options">
+                        <label for="sort">Sort by:</label>
+                        <select id="sort">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="newest">Newest Arrivals</option>
+                            <option value="bestselling">Best Selling</option>
+                        </select>
+                    </div>
+                    <div class="view-options">
+                        <button class="active" data-view="grid"><i class="fas fa-th"></i></button>
+                        <button data-view="list"><i class="fas fa-list"></i></button>
+                    </div>
+                </div>
+                
+                <div class="products" id="shop-products">
+                    <!-- Products will be loaded dynamically with JS -->
+                </div>
+                
+                <div class="pagination">
+                    <a href="#" id="prev-page">&laquo;</a>
+                    <a href="#" class="active" data-page="1">1</a>
+                    <a href="#" data-page="2">2</a>
+                    <a href="#" data-page="3">3</a>
+                    <a href="#" data-page="4">4</a>
+                    <a href="#" data-page="5">5</a>
+                    <a href="#" id="next-page">&raquo;</a>
+                </div>
+            </main>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>TrendShirt</h3>
+                    <p>Premium quality shirts that combine comfort and fashion. Elevate your style with our curated collections.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Payment Methods</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Fashion Street, Mumbai</li>
+                        <li><i class="fas fa-phone"></i> +91 9876543210</li>
+                        <li><i class="fas fa-envelope"></i> info@trendshirt.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 TrendShirt. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Extended Products Data (50 products)
+        const shopProducts = [
+            {
+                id: 1,
+                name: "Classic White Shirt",
+                description: "Premium cotton formal shirt with french cuffs",
+                price: 1299,
+                image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Bestseller",
+                category: "formal",
+                color: "white",
+                sizes: ["S", "M", "L", "XL"],
+                dateAdded: "2023-06-01",
+                sales: 142,
+                featured: true
+            },
+            {
+                id: 2,
+                name: "Denim Casual Shirt",
+                description: "Stylish denim shirt for casual outings",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "New",
+                category: "casual",
+                color: "blue",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-15",
+                sales: 87,
+                featured: true
+            },
+            {
+                id: 3,
+                name: "Floral Summer Shirt",
+                description: "Lightweight floral print shirt for summer",
+                price: 999,
+                image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Sale",
+                category: "summer",
+                color: "multicolor",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-05-20",
+                sales: 203,
+                featured: true
+            },
+            {
+                id: 4,
+                name: "Striped Linen Shirt",
+                description: "Breathable linen shirt with vertical stripes",
+                price: 1799,
+                image: "https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1024&q=80",
+                tag: "Limited",
+                category: "designer",
+                color: "black",
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                dateAdded: "2023-06-10",
+                sales: 65,
+                featured: true
+            },
+            {
+                id: 5,
+                name: "Oxford Blue Shirt",
+                description: "Classic oxford shirt in navy blue",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80",
+                tag: "Popular",
+                category: "formal",
+                color: "blue",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-05-15",
+                sales: 178
+            },
+            {
+                id: 6,
+                name: "Checkered Red Shirt",
+                description: "Warm checkered shirt for winter",
+                price: 1399,
+                image: "https://images.unsplash.com/photo-1525450824786-227cbef70703?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Winter",
+                category: "casual",
+                color: "red",
+                sizes: ["S", "M", "L", "XL"],
+                dateAdded: "2023-04-10",
+                sales: 92
+            },
+            {
+                id: 7,
+                name: "Black Silk Shirt",
+                description: "Luxurious silk shirt for special occasions",
+                price: 2499,
+                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1036&q=80",
+                tag: "Luxury",
+                category: "designer",
+                color: "black",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-05",
+                sales: 43
+            },
+            {
+                id: 8,
+                name: "Pink Casual Shirt",
+                description: "Soft cotton shirt in pastel pink",
+                price: 1199,
+                image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80",
+                tag: "Spring",
+                category: "casual",
+                color: "pink",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-05-25",
+                sales: 76
+            },
+            {
+                id: 9,
+                name: "White Linen Shirt",
+                description: "Breathable linen shirt for summer",
+                price: 1699,
+                image: "https://images.unsplash.com/photo-1595341595379-cf0f0f13d8f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Summer",
+                category: "summer",
+                color: "white",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-12",
+                sales: 112
+            },
+            {
+                id: 10,
+                name: "Gray Formal Shirt",
+                description: "Slim fit formal shirt in gray",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Office",
+                category: "formal",
+                color: "gray",
+                sizes: ["S", "M", "L", "XL"],
+                dateAdded: "2023-05-05",
+                sales: 134
+            },
+            {
+                id: 11,
+                name: "Green Casual Shirt",
+                description: "Relaxed fit shirt in olive green",
+                price: 1299,
+                image: "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80",
+                tag: "Casual",
+                category: "casual",
+                color: "green",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-06-18",
+                sales: 68
+            },
+            {
+                id: 12,
+                name: "Patterned Designer Shirt",
+                description: "Unique patterned designer shirt",
+                price: 2199,
+                image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Exclusive",
+                category: "designer",
+                color: "multicolor",
+                sizes: ["M", "L"],
+                dateAdded: "2023-06-20",
+                sales: 29
+            },
+            {
+                id: 13,
+                name: "Navy Blue Formal Shirt",
+                description: "Classic navy blue formal shirt",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                tag: "Popular",
+                category: "formal",
+                color: "blue",
+                sizes: ["S", "M", "L", "XL"],
+                dateAdded: "2023-05-12",
+                sales: 156
+            },
+            {
+                id: 14,
+                name: "Beige Linen Shirt",
+                description: "Lightweight beige linen shirt",
+                price: 1799,
+                image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Summer",
+                category: "summer",
+                color: "beige",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-08",
+                sales: 87
+            },
+            {
+                id: 15,
+                name: "Black & White Check Shirt",
+                description: "Classic black and white check shirt",
+                price: 1399,
+                image: "https://images.unsplash.com/photo-1525450824786-227cbef70703?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Office",
+                category: "formal",
+                color: "black",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-04-22",
+                sales: 112
+            },
+            {
+                id: 16,
+                name: "Red Plaid Shirt",
+                description: "Warm red plaid shirt for winter",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Winter",
+                category: "casual",
+                color: "red",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-03-15",
+                sales: 94
+            },
+            {
+                id: 17,
+                name: "White Cotton Shirt",
+                description: "Pure cotton white shirt",
+                price: 1299,
+                image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Essential",
+                category: "formal",
+                color: "white",
+                sizes: ["S", "M", "L", "XL"],
+                dateAdded: "2023-05-30",
+                sales: 203
+            },
+            {
+                id: 18,
+                name: "Denim Overshirt",
+                description: "Trendy denim overshirt",
+                price: 1899,
+                image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Trending",
+                category: "casual",
+                color: "blue",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-06-14",
+                sales: 67
+            },
+            {
+                id: 19,
+                name: "Striped Cotton Shirt",
+                description: "Comfortable striped cotton shirt",
+                price: 1399,
+                image: "https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1024&q=80",
+                tag: "Casual",
+                category: "casual",
+                color: "blue",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-05-18",
+                sales: 89
+            },
+            {
+                id: 20,
+                name: "Black Formal Shirt",
+                description: "Sleek black formal shirt",
+                price: 1699,
+                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1036&q=80",
+                tag: "Elegant",
+                category: "formal",
+                color: "black",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-04-05",
+                sales: 112
+            },
+            {
+                id: 21,
+                name: "Light Blue Oxford Shirt",
+                description: "Classic light blue oxford shirt",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80",
+                tag: "Office",
+                category: "formal",
+                color: "blue",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-05-22",
+                sales: 134
+            },
+            {
+                id: 22,
+                name: "Yellow Summer Shirt",
+                description: "Bright yellow summer shirt",
+                price: 1199,
+                image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80",
+                tag: "Summer",
+                category: "summer",
+                color: "yellow",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-06-03",
+                sales: 78
+            },
+            {
+                id: 23,
+                name: "Gray Check Shirt",
+                description: "Stylish gray check shirt",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Smart",
+                category: "formal",
+                color: "gray",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-04-18",
+                sales: 92
+            },
+            {
+                id: 24,
+                name: "Pink Linen Shirt",
+                description: "Soft pink linen shirt",
+                price: 1699,
+                image: "https://images.unsplash.com/photo-1595341595379-cf0f0f13d8f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Spring",
+                category: "summer",
+                color: "pink",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-05-08",
+                sales: 87
+            },
+            {
+                id: 25,
+                name: "Black & White Striped Shirt",
+                description: "Classic black and white striped shirt",
+                price: 1399,
+                image: "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80",
+                tag: "Casual",
+                category: "casual",
+                color: "black",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-04-30",
+                sales: 103
+            },
+            {
+                id: 26,
+                name: "Navy Blue Linen Shirt",
+                description: "Breathable navy blue linen shirt",
+                price: 1799,
+                image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Summer",
+                category: "summer",
+                color: "blue",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-06-17",
+                sales: 76
+            },
+            {
+                id: 27,
+                name: "White Poplin Shirt",
+                description: "Crisp white poplin shirt",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                tag: "Formal",
+                category: "formal",
+                color: "white",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-05-25",
+                sales: 128
+            },
+            {
+                id: 28,
+                name: "Green Check Shirt",
+                description: "Stylish green check shirt",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Casual",
+                category: "casual",
+                color: "green",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-06-09",
+                sales: 84
+            },
+            {
+                id: 29,
+                name: "Black Denim Shirt",
+                description: "Trendy black denim shirt",
+                price: 1899,
+                image: "https://images.unsplash.com/photo-1525450824786-227cbef70703?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Trending",
+                category: "casual",
+                color: "black",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-05-14",
+                sales: 67
+            },
+            {
+                id: 30,
+                name: "Blue Striped Shirt",
+                description: "Classic blue striped shirt",
+                price: 1399,
+                image: "https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1024&q=80",
+                tag: "Office",
+                category: "formal",
+                color: "blue",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-04-28",
+                sales: 112
+            },
+            {
+                id: 31,
+                name: "Red Linen Shirt",
+                description: "Vibrant red linen shirt",
+                price: 1699,
+                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1036&q=80",
+                tag: "Summer",
+                category: "summer",
+                color: "red",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-11",
+                sales: 79
+            },
+            {
+                id: 32,
+                name: "White & Blue Striped Shirt",
+                description: "Nautical white and blue striped shirt",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80",
+                tag: "Casual",
+                category: "casual",
+                color: "blue",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-05-17",
+                sales: 93
+            },
+            {
+                id: 33,
+                name: "Gray Linen Shirt",
+                description: "Elegant gray linen shirt",
+                price: 1799,
+                image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80",
+                tag: "Summer",
+                category: "summer",
+                color: "gray",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-13",
+                sales: 68
+            },
+            {
+                id: 34,
+                name: "Black & White Check Shirt",
+                description: "Classic black and white check shirt",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Office",
+                category: "formal",
+                color: "black",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-05-09",
+                sales: 107
+            },
+            {
+                id: 35,
+                name: "Blue Denim Shirt",
+                description: "Classic blue denim shirt",
+                price: 1899,
+                image: "https://images.unsplash.com/photo-1595341595379-cf0f0f13d8f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Casual",
+                category: "casual",
+                color: "blue",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-16",
+                sales: 72
+            },
+            {
+                id: 36,
+                name: "White Oxford Shirt",
+                description: "Crisp white oxford shirt",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80",
+                tag: "Formal",
+                category: "formal",
+                color: "white",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-05-19",
+                sales: 118
+            },
+            {
+                id: 37,
+                name: "Navy Blue Poplin Shirt",
+                description: "Sleek navy blue poplin shirt",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Office",
+                category: "formal",
+                color: "blue",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-07",
+                sales: 94
+            },
+            {
+                id: 38,
+                name: "Pink Oxford Shirt",
+                description: "Soft pink oxford shirt",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                tag: "Casual",
+                category: "casual",
+                color: "pink",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-05-23",
+                sales: 87
+            },
+            {
+                id: 39,
+                name: "Black Poplin Shirt",
+                description: "Elegant black poplin shirt",
+                price: 1699,
+                image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Formal",
+                category: "formal",
+                color: "black",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-02",
+                sales: 76
+            },
+            {
+                id: 40,
+                name: "White Linen Shirt",
+                description: "Breathable white linen shirt",
+                price: 1799,
+                image: "https://images.unsplash.com/photo-1525450824786-227cbef70703?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Summer",
+                category: "summer",
+                color: "white",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-06-19",
+                sales: 63
+            },
+            {
+                id: 41,
+                name: "Blue Check Shirt",
+                description: "Classic blue check shirt",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1024&q=80",
+                tag: "Office",
+                category: "formal",
+                color: "blue",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-05-28",
+                sales: 89
+            },
+            {
+                id: 42,
+                name: "Gray Denim Shirt",
+                description: "Trendy gray denim shirt",
+                price: 1899,
+                image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1036&q=80",
+                tag: "Casual",
+                category: "casual",
+                color: "gray",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-06-04",
+                sales: 71
+            },
+            {
+                id: 43,
+                name: "Navy Blue Linen Shirt",
+                description: "Classic navy blue linen shirt",
+                price: 1799,
+                image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80",
+                tag: "Summer",
+                category: "summer",
+                color: "blue",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-21",
+                sales: 58
+            },
+            {
+                id: 44,
+                name: "White Cotton Shirt",
+                description: "Pure white cotton shirt",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1064&q=80",
+                tag: "Essential",
+                category: "formal",
+                color: "white",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-05-31",
+                sales: 102
+            },
+            {
+                id: 45,
+                name: "Black Linen Shirt",
+                description: "Elegant black linen shirt",
+                price: 1799,
+                image: "https://images.unsplash.com/photo-1617137968427-85924c800a22?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Summer",
+                category: "summer",
+                color: "black",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-22",
+                sales: 67
+            },
+            {
+                id: 46,
+                name: "Blue Oxford Shirt",
+                description: "Classic blue oxford shirt",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1595341595379-cf0f0f13d8f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
+                tag: "Office",
+                category: "formal",
+                color: "blue",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-05-26",
+                sales: 93
+            },
+            {
+                id: 47,
+                name: "White & Black Striped Shirt",
+                description: "Classic white and black striped shirt",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1620799139507-2a76f79a2f4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1072&q=80",
+                tag: "Casual",
+                category: "casual",
+                color: "black",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-06",
+                sales: 81
+            },
+            {
+                id: 48,
+                name: "Navy Blue Cotton Shirt",
+                description: "Classic navy blue cotton shirt",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Office",
+                category: "formal",
+                color: "blue",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-05-29",
+                sales: 97
+            },
+            {
+                id: 49,
+                name: "Gray Cotton Shirt",
+                description: "Classic gray cotton shirt",
+                price: 1499,
+                image: "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                tag: "Casual",
+                category: "casual",
+                color: "gray",
+                sizes: ["M", "L", "XL"],
+                dateAdded: "2023-06-23",
+                sales: 72
+            },
+            {
+                id: 50,
+                name: "White Silk Shirt",
+                description: "Luxurious white silk shirt",
+                price: 2499,
+                image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1025&q=80",
+                tag: "Luxury",
+                category: "designer",
+                color: "white",
+                sizes: ["S", "M", "L"],
+                dateAdded: "2023-06-24",
+                sales: 42
+            }
+        ];
+
+        // Cart and Wishlist Data
+        let cart = [];
+        let wishlist = [];
+        let currentPage = 1;
+        const productsPerPage = 12;
+        
+        // Filter and Sort State
+        let currentFilters = {
+            category: 'all',
+            minPrice: 0,
+            maxPrice: 10000,
+            size: 'all',
+            color: 'all'
+        };
+        
+        let currentSort = 'featured';
+        let currentView = 'grid';
+        
+        // DOM Elements
+        const productsContainer = document.getElementById('shop-products');
+        const featuredProductsContainer = document.querySelector('.featured-collection .products');
+        const categoryFilter = document.getElementById('category-filter');
+        const priceRange = document.getElementById('price-range');
+        const minPriceInput = document.getElementById('min-price');
+        const maxPriceInput = document.getElementById('max-price');
+        const sizeFilter = document.getElementById('size-filter');
+        const colorFilter = document.getElementById('color-filter');
+        const applyFiltersBtn = document.getElementById('apply-filters');
+        const resetFiltersBtn = document.getElementById('reset-filters');
+        const sortSelect = document.getElementById('sort');
+        const viewOptions = document.querySelectorAll('.view-options button');
+        const paginationLinks = document.querySelectorAll('.pagination a');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        const showingCount = document.getElementById('showing-count');
+        
+        // Timer for special offers
+        function updateTimer() {
+            const now = new Date();
+            const endDate = new Date();
+            endDate.setDate(now.getDate() + 2); // 2 days from now
+            
+            const diff = endDate - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        setInterval(updateTimer, 1000);
+        updateTimer();
+        
+        // Initialize the page
+        function init() {
+            renderFeaturedProducts();
+            renderProducts();
+            setupEventListeners();
+        }
+        
+        // Render featured products
+        function renderFeaturedProducts() {
+            const featuredProducts = shopProducts.filter(product => product.featured);
+            featuredProductsContainer.innerHTML = '';
+            
+            featuredProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                featuredProductsContainer.appendChild(productCard);
+            });
+        }
+        
+        // Render products based on current filters, sort, and pagination
+        function renderProducts() {
+            // Filter products
+            let filteredProducts = shopProducts.filter(product => {
+                // Category filter
+                if (currentFilters.category !== 'all' && product.category !== currentFilters.category) {
+                    return false;
+                }
+                
+                // Price filter
+                if (product.price < currentFilters.minPrice || product.price > currentFilters.maxPrice) {
+                    return false;
+                }
+                
+                // Size filter
+                if (currentFilters.size !== 'all' && !product.sizes.includes(currentFilters.size)) {
+                    return false;
+                }
+                
+                // Color filter
+                if (currentFilters.color !== 'all' && product.color !== currentFilters.color) {
+                    if (currentFilters.color === 'multicolor' && !product.color.includes('multicolor')) {
+                        return false;
+                    }
+                    if (currentFilters.color !== 'multicolor' && product.color === 'multicolor') {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+            
+            // Sort products
+            filteredProducts = sortProducts(filteredProducts, currentSort);
+            
+            // Pagination
+            const totalProducts = filteredProducts.length;
+            const totalPages = Math.ceil(totalProducts / productsPerPage);
+            const startIndex = (currentPage - 1) * productsPerPage;
+            const endIndex = Math.min(startIndex + productsPerPage, totalProducts);
+            const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+            
+            // Update showing count
+            showingCount.textContent = `Showing ${startIndex + 1}-${endIndex} of ${totalProducts} products`;
+            
+            // Render products
+            productsContainer.innerHTML = '';
+            
+            if (paginatedProducts.length === 0) {
+                productsContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 2rem;">No products match your filters. Try adjusting your criteria.</p>';
+                return;
+            }
+            
+            paginatedProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                productsContainer.appendChild(productCard);
+            });
+            
+            // Update pagination UI
+            updatePaginationUI(totalPages);
+        }
+        
+        // Create product card element
+        function createProductCard(product) {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.dataset.id = product.id;
+            
+            const productImg = document.createElement('div');
+            productImg.className = 'product-img';
+            
+            const img = document.createElement('img');
+            img.src = product.image;
+            img.alt = product.name;
+            
+            const productTag = document.createElement('span');
+            productTag.className = 'product-tag';
+            productTag.textContent = product.tag;
+            
+            productImg.appendChild(img);
+            productImg.appendChild(productTag);
+            
+            const productInfo = document.createElement('div');
+            productInfo.className = 'product-info';
+            
+            const productName = document.createElement('h3');
+            productName.textContent = product.name;
+            
+            const productDesc = document.createElement('p');
+            productDesc.textContent = product.description;
+            
+            // Size options
+            const sizeOptions = document.createElement('div');
+            sizeOptions.className = 'size-options';
+            
+            product.sizes.forEach(size => {
+                const sizeBtn = document.createElement('button');
+                sizeBtn.textContent = size;
+                sizeBtn.dataset.size = size;
+                sizeOptions.appendChild(sizeBtn);
+            });
+            
+            // Color options
+            const colorOptions = document.createElement('div');
+            colorOptions.className = 'color-options';
+            
+            const colors = typeof product.color === 'string' ? [product.color] : product.color;
+            colors.forEach(color => {
+                const colorBtn = document.createElement('button');
+                colorBtn.dataset.color = color;
+                colorBtn.style.background = color === 'multicolor' ? 'linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet)' : color;
+                colorOptions.appendChild(colorBtn);
+            });
+            
+            const productBottom = document.createElement('div');
+            productBottom.className = 'product-bottom';
+            
+            const price = document.createElement('div');
+            price.className = 'price';
+            price.textContent = `₹${product.price.toLocaleString()}`;
+            
+            const addToCartBtn = document.createElement('button');
+            addToCartBtn.className = 'add-to-cart';
+            addToCartBtn.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+            
+            productBottom.appendChild(price);
+            productBottom.appendChild(addToCartBtn);
+            
+            productInfo.appendChild(productName);
+            productInfo.appendChild(productDesc);
+            productInfo.appendChild(sizeOptions);
+            productInfo.appendChild(colorOptions);
+            productInfo.appendChild(productBottom);
+            
+            productCard.appendChild(productImg);
+            productCard.appendChild(productInfo);
+            
+            return productCard;
+        }
+        
+        // Sort products based on current sort option
+        function sortProducts(products, sortOption) {
+            switch(sortOption) {
+                case 'price-low':
+                    return [...products].sort((a, b) => a.price - b.price);
+                case 'price-high':
+                    return [...products].sort((a, b) => b.price - a.price);
+                case 'newest':
+                    return [...products].sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+                case 'bestselling':
+                    return [...products].sort((a, b) => b.sales - a.sales);
+                case 'featured':
+                default:
+                    return products;
+            }
+        }
+        
+        // Update pagination UI
+        function updatePaginationUI(totalPages) {
+            const paginationLinks = document.querySelectorAll('.pagination a[data-page]');
+            
+            paginationLinks.forEach(link => {
+                const pageNum = parseInt(link.dataset.page);
+                link.classList.toggle('active', pageNum === currentPage);
+                
+                // Hide pages that are beyond a reasonable range
+                if (pageNum > totalPages) {
+                    link.style.display = 'none';
+                } else {
+                    link.style.display = 'inline-block';
+                }
+            });
+            
+            // Enable/disable prev/next buttons
+            prevPageBtn.classList.toggle('disabled', currentPage === 1);
+            nextPageBtn.classList.toggle('disabled', currentPage === totalPages);
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Category filter
+            categoryFilter.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    categoryFilter.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                    link.classList.add('active');
+                    currentFilters.category = link.dataset.category;
+                    currentPage = 1;
+                    renderProducts();
+                });
+            });
+            
+            // Price range filter
+            priceRange.addEventListener('input', () => {
+                maxPriceInput.value = priceRange.value;
+                currentFilters.maxPrice = parseInt(priceRange.value);
+            });
+            
+            minPriceInput.addEventListener('change', () => {
+                if (parseInt(minPriceInput.value) < 0) minPriceInput.value = 0;
+                if (parseInt(minPriceInput.value) > parseInt(maxPriceInput.value)) {
+                    minPriceInput.value = maxPriceInput.value;
+                }
+                priceRange.min = minPriceInput.value;
+                currentFilters.minPrice = parseInt(minPriceInput.value);
+            });
+            
+            maxPriceInput.addEventListener('change', () => {
+                if (parseInt(maxPriceInput.value) > 10000) maxPriceInput.value = 10000;
+                if (parseInt(maxPriceInput.value) < parseInt(minPriceInput.value)) {
+                    maxPriceInput.value = minPriceInput.value;
+                }
+                priceRange.value = maxPriceInput.value;
+                currentFilters.maxPrice = parseInt(maxPriceInput.value);
+            });
+            
+            // Size filter
+            sizeFilter.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sizeFilter.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    currentFilters.size = btn.dataset.size;
+                    currentPage = 1;
+                    renderProducts();
+                });
+            });
+            
+            // Color filter
+            colorFilter.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    colorFilter.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    currentFilters.color = btn.dataset.color;
+                    currentPage = 1;
+                    renderProducts();
+                });
+            });
+            
+            // Apply filters button
+            applyFiltersBtn.addEventListener('click', () => {
+                currentPage = 1;
+                renderProducts();
+            });
+            
+            // Reset filters button
+            resetFiltersBtn.addEventListener('click', () => {
+                // Reset all filters
+                currentFilters = {
+                    category: 'all',
+                    minPrice: 0,
+                    maxPrice: 5000,
+                    size: 'all',
+                    color: 'all'
+                };
+                
+                // Update UI
+                categoryFilter.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                categoryFilter.querySelector('a[data-category="all"]').classList.add('active');
+                
+                priceRange.value = 5000;
+                minPriceInput.value = 0;
+                maxPriceInput.value = 5000;
+                
+                sizeFilter.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                sizeFilter.querySelector('button[data-size="all"]').classList.add('selected');
+                
+                colorFilter.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+                colorFilter.querySelector('button[data-color="all"]').classList.add('selected');
+                
+                currentPage = 1;
+                renderProducts();
+            });
+            
+            // Sort select
+            sortSelect.addEventListener('change', () => {
+                currentSort = sortSelect.value;
+                renderProducts();
+            });
+            
+            // View options
+            viewOptions.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    viewOptions.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentView = btn.dataset.view;
+                    
+                    if (currentView === 'list') {
+                        productsContainer.classList.add('list-view');
+                    } else {
+                        productsContainer.classList.remove('list-view');
+                    }
+                });
+            });
+            
+            // Pagination
+            paginationLinks.forEach(link => {
+                if (link.dataset.page) {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        currentPage = parseInt(link.dataset.page);
+                        renderProducts();
+                        window.scrollTo({ top: productsContainer.offsetTop - 100, behavior: 'smooth' });
+                    });
+                }
+            });
+            
+            // Previous page
+            prevPageBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderProducts();
+                    window.scrollTo({ top: productsContainer.offsetTop - 100, behavior: 'smooth' });
+                }
+            });
+            
+            // Next page
+            nextPageBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const totalProducts = getFilteredProducts().length;
+                const totalPages = Math.ceil(totalProducts / productsPerPage);
+                
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderProducts();
+                    window.scrollTo({ top: productsContainer.offsetTop - 100, behavior: 'smooth' });
+                }
+            });
+        }
+        
+        // Get filtered products (without pagination)
+        function getFilteredProducts() {
+            return shopProducts.filter(product => {
+                // Category filter
+                if (currentFilters.category !== 'all' && product.category !== currentFilters.category) {
+                    return false;
+                }
+                
+                // Price filter
+                if (product.price < currentFilters.minPrice || product.price > currentFilters.maxPrice) {
+                    return false;
+                }
+                
+                // Size filter
+                if (currentFilters.size !== 'all' && !product.sizes.includes(currentFilters.size)) {
+                    return false;
+                }
+                
+                // Color filter
+                if (currentFilters.color !== 'all' && product.color !== currentFilters.color) {
+                    if (currentFilters.color === 'multicolor' && !product.color.includes('multicolor')) {
+                        return false;
+                    }
+                    if (currentFilters.color !== 'multicolor' && product.color === 'multicolor') {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
